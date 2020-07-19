@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext"
+      rel="stylesheet"
+    />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/fontawesome-all.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  </head>
+  <body>
+    <div id="pricing" class="cards-2">
+      <div class="package">
+        <input type="text" v-model="searchText" />
+        <select @change="package = $event.target.value">
+          <option>family</option>
+          <option>individual</option>
+        </select>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="above-heading">COMPARISON</div>
+            <h2 class="h2-heading">Health Insurance Options</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12" v-if="filteredCompanies.length">
+            <div
+              class="card"
+              v-for="(company, i) in filteredCompanies"
+              :key="i"
+            >
+              <div class="logo">
+                <img :src="company.logo" />
+              </div>
+              <div class="card-body">
+                <div class="card-title">{{ company.name }}</div>
+
+                <div class="price">
+                  <span class="currency">{{ "\u20A6" }}</span
+                  ><span class="value"
+                    >{{ formatAmount(company[package].price) }}</span
+                  >
+                </div>
+                <div class="frequency">monthly</div>
+                <div class="divider"></div>
+                <a
+                  class="btn-solid-reg page-scroll"
+                  style="text-transform: capitalize;"
+                  href="#"
+                  >{{ package }}</a
+                >
+                <ul class="list-unstyled li-space-lg">
+                  <li
+                    class="benefit"
+                    v-for="benefit in company[package].benefits"
+                    :key="benefit"
+                  >
+                    <i class="fas fa-check"></i>
+                    <div class="benefit-text">{{ benefit }}</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 none" v-else>
+            <img src="forbidden.svg" />
+            <p>
+              "{{searchText}}" not found in {{ companies.map(key =>
+              key.name).join(", ").replace(/,([^,]*)$/, " and "+'$1') }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- end of container -->
+    </div>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>
