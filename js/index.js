@@ -64,7 +64,8 @@ document.addEventListener("DOMContentLoaded", function () {
           (key) =>
             key.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
             key[this.package].benefits
-              .map((i) => i.toLowerCase())
+              .join()
+              .toLowerCase()
               .includes(this.searchText.toLowerCase()) ||
             String(key[this.package].price)
               .toLowerCase()
